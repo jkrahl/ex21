@@ -33,11 +33,9 @@ void inicializar(Partida& partida, Fitxa fitxesInicials[MAX_FITXES * MAX_JUGADOR
 	partida.valorEsq = partida.jugadors[0].fitxes[0].valor1;
 	partida.valorDret = partida.jugadors[0].fitxes[0].valor2;
 	quitarFichaDelJugador(partida, 0);
-
-	partida.jugadorActual = 1;
 }
 
-void seleccionaFitxa(Partida& partida, Fitxa& fitxa, int& index)
+void seleccionaFitxa(Partida& partida, Fitxa& fitxa, unsigned& index)
 {
 	index = 0;
 	bool trobat = false;
@@ -68,7 +66,7 @@ void seleccionaFitxa(Partida& partida, Fitxa& fitxa, int& index)
 
 
 
-void actualitzaPartida(Partida& partida, Fitxa& fitxa, int& index)
+void actualitzaPartida(Partida& partida, Fitxa& fitxa, unsigned& index)
 {
 	partida.nTornsPassant = 0;
 	if (partida.valorEsq == fitxa.valor1)
@@ -115,8 +113,7 @@ void cambioDeTurno(Partida& partida)
 int jugaDomino(Fitxa fitxesInicials[MAX_FITXES * MAX_JUGADORS], Fitxa fitxesJugades[MAX_FITXES * MAX_JUGADORS * 2], int& nFitxesJugades)
 {
 	nFitxesJugades = 0;
-	fitxesJugades[0].valor1 = 0;
-	fitxesJugades[0].valor2 = 0;
+	fitxesJugades[0] = Fitxa{ -1, -1 };
 	int jugadorGuanyador = -1;
 	bool bloqueada = false;
 	Partida partida;
@@ -125,7 +122,7 @@ int jugaDomino(Fitxa fitxesInicials[MAX_FITXES * MAX_JUGADORS], Fitxa fitxesJuga
 	while ((jugadorGuanyador == -1) && (!bloqueada))
 	{
 		Fitxa f;
-		int index;
+		unsigned index = 0;
 		seleccionaFitxa(partida, f, index);
 		fitxesJugades[nFitxesJugades].valor1 = f.valor1;
 		fitxesJugades[nFitxesJugades].valor2 = f.valor2;
